@@ -1,0 +1,30 @@
+import PRi.GPIO as GGG
+aux = 2
+GGG.setmode(GGG.BCM)
+GGG.setup(aux, GGG.OUT)
+p = GGG.PWN(aux, 1000)
+p.start(0)
+
+try:
+ while True:
+   inputStr = input("Enter a value between 0 and 100 ('q' to exit) >")
+
+	if inputStr.isdigit():
+	    value = float(inputStr)
+	    if value > 100 or value < 0:
+		print ("The value is invalid, try again")
+		 continue
+	    p.ChangeDutCycle(value)
+	elif inputStr == 'q':
+ 	  break
+	else:
+	   print("Enter a positivle float")
+	   continue
+except KeyboardInterrupt:
+	print("The program was stopped by the keyboard")
+else:
+ 	print("No exeptins")
+finally:
+	p.stop()
+	GGG.cleanup(aux)
+	print("GGG cleanup completed")	
